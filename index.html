@@ -912,7 +912,9 @@ theOnesOK = function(DF_country_and_variable) {
   is_above &lt;- ifelse(variable_values &gt; avg_value, &quot;Above Average&quot;, &quot;Below/At Average&quot;)    # compares values to the mean
   DF_country_and_variable$Status &lt;- is_above                # adds a new column named &#39;Status&#39;
   return(DF_country_and_variable)                           # returns the modified data frame
-}</code></pre>
+}
+
+# This function labels each country as “Above Average” or “Below/At Average” based on whether its value is greater than the mean of a selected variable.</code></pre>
 <pre class="r"><code>theOnesOK(fragility23[,c(&#39;Country&#39;,&#39;S1: Demographic Pressures&#39;)]) # applies the function to selected columns</code></pre>
 <pre><code>##                       Country S1: Demographic Pressures           Status
 ## 1                     Somalia                      10.0    Above Average
@@ -1099,7 +1101,9 @@ theOnesOK = function(DF_country_and_variable) {
   average=&#39;average&#39;                                        # sets the name of the new column
   newDF[,average]=apply(DF[,positionsToUse],1,mean,na.rm = TRUE)    # computes row-wise means
   return(newDF[,c(CountryColumn,average)])                 # returns country and average columns
-}</code></pre>
+}
+
+# This function computes the average of multiple columns for each country and returns a simplified summary table.</code></pre>
 <pre class="r"><code>mystery(fragility23,4:6)                                  # applies the mystery function to columns 4 through 6</code></pre>
 <pre><code>##                       Country   average
 ## 1                     Somalia 43.633333

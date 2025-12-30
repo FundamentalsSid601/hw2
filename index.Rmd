@@ -127,6 +127,9 @@ theOnesOK = function(DF_country_and_variable) {
   DF_country_and_variable$Status <- is_above                # adds a new column named 'Status'
   return(DF_country_and_variable)                           # returns the modified data frame
 }
+
+# This function labels each country as “Above Average” or “Below/At Average” based on whether its value is greater than the mean of a selected variable.
+
 ```
 
 ```{r}
@@ -140,6 +143,8 @@ mystery=function(DF,positionsToUse,CountryColumn='Country'){
   newDF[,average]=apply(DF[,positionsToUse],1,mean,na.rm = TRUE)    # computes row-wise means
   return(newDF[,c(CountryColumn,average)])                 # returns country and average columns
 }
+
+# This function computes the average of multiple columns for each country and returns a simplified summary table.
 ```
 
 ```{r}
