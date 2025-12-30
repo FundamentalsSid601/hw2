@@ -1,19 +1,16 @@
 ---
-title: An R Markdown document converted from "Applying_Fun_R.ipynb"
+title: HW2 R Notebook
 output: html_document
+author: Sidhant Sharma
 ---
 
 # Applying functions in R
 
-Installing to tead Excel files:
+
+### Reading data
 
 ```{r}
 # install.packages('rio')
-```
-
-# reading data
-
-```{r}
 # opening a file from a url (file in Excel), name it 'fragility23'
 linkGit="https://github.com/DACSS-Fundamentals/overview/raw/refs/heads/main/FSI-2023-DOWNLOAD.xlsx" # opening a file from a url (file in Excel), name it 'fragility23'
 
@@ -25,7 +22,7 @@ fragility23=rio::import(file = linkGit) # imports the Excel file and stores it a
 str(fragility23) # displays the structure of the data frame
 ```
 
-## Apply square root function?
+### Apply square root function?
 
 ```{r}
 # whole DF?
@@ -48,7 +45,7 @@ sqrt(fragility23$Total)  # applies square root to the 'Total' column
 sqrt(fragility23$Total[1]) # applies square root to the first value of the 'Total' column
 ```
 
-## Applying **sum()**:
+### Applying **sum()**:
 
 ```{r}
 # sum everything
@@ -116,7 +113,7 @@ print(sapply(fragility23[,4:5],sqrt)) # applies sqrt() and simplifies the output
 class(sapply(fragility23[,4:5],sqrt)) # checks the class of the simplified output
 ```
 
-Now our own function:
+#### Now our own function:
 
 ```{r}
 # defines a custom function

@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Sidhant Sharma" />
 
 
-<title>An R Markdown document converted from “Applying_Fun_R.ipynb”</title>
+<title>HW2 R Notebook</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -348,20 +349,18 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">An R Markdown document converted from
-“Applying_Fun_R.ipynb”</h1>
+<h1 class="title toc-ignore">HW2 R Notebook</h1>
+<h4 class="author">Sidhant Sharma</h4>
 
 </div>
 
 
 <div id="applying-functions-in-r" class="section level1">
 <h1>Applying functions in R</h1>
-<p>Installing to tead Excel files:</p>
-<pre class="r"><code># install.packages(&#39;rio&#39;)</code></pre>
-</div>
-<div id="reading-data" class="section level1">
-<h1>reading data</h1>
-<pre class="r"><code># opening a file from a url (file in Excel), name it &#39;fragility23&#39;
+<div id="reading-data" class="section level3">
+<h3>Reading data</h3>
+<pre class="r"><code># install.packages(&#39;rio&#39;)
+# opening a file from a url (file in Excel), name it &#39;fragility23&#39;
 linkGit=&quot;https://github.com/DACSS-Fundamentals/overview/raw/refs/heads/main/FSI-2023-DOWNLOAD.xlsx&quot; # opening a file from a url (file in Excel), name it &#39;fragility23&#39;
 
 # library(rio) # package needed
@@ -384,8 +383,9 @@ fragility23=rio::import(file = linkGit) # imports the Excel file and stores it a
 ##  $ C1: Security Apparatus          : num  9.5 8.6 9.9 8.8 9.4 9.7 8.3 8 8.7 6.8 ...
 ##  $ C2: Factionalized Elites        : num  10 9.9 9.2 9.6 9.9 8.7 9.6 9.4 9.5 9.7 ...
 ##  $ X1: External Intervention       : num  9.1 9.2 9.2 9.1 10 7.7 8.1 9.4 7.9 9.6 ...</code></pre>
-<div id="apply-square-root-function" class="section level2">
-<h2>Apply square root function?</h2>
+</div>
+<div id="apply-square-root-function" class="section level3">
+<h3>Apply square root function?</h3>
 <pre class="r"><code># whole DF?
 # sqrt(fragility23) # would fail because sqrt() cannot be applied to non-numeric columns</code></pre>
 <pre class="r"><code># several columns (only numerical)
@@ -603,8 +603,8 @@ sqrt(fragility23$Total)  # applies square root to the &#39;Total&#39; column</co
 sqrt(fragility23$Total[1]) # applies square root to the first value of the &#39;Total&#39; column</code></pre>
 <pre><code>## [1] 10.57828</code></pre>
 </div>
-<div id="applying-sum" class="section level2">
-<h2>Applying <strong>sum()</strong>:</h2>
+<div id="applying-sum" class="section level3">
+<h3>Applying <strong>sum()</strong>:</h3>
 <pre class="r"><code># sum everything
 sum(fragility23[,4:5]) # sums all values in columns 4 and 5</code></pre>
 <pre><code>## [1] 12850.1</code></pre>
@@ -646,6 +646,7 @@ print(apply(fragility23[,4:5],1,sum)) # applies sum() row-wise (margin = 1)</cod
 ##  37.8  36.7  34.0  35.6  36.4  31.9  30.9  29.7  28.0  26.9  28.0  25.8  23.5 
 ##   170   171   172   173   174   175   176   177   178   179 
 ##  23.6  21.9  22.3  20.1  20.2  20.2  17.8  17.7  17.2  15.9</code></pre>
+</div>
 <div id="apply-by-iterating" class="section level3">
 <h3>Apply by iterating:</h3>
 <pre class="r"><code>print(lapply(fragility23[,4:5],sum)) # applies sum() to each column and returns a list</code></pre>
@@ -904,7 +905,8 @@ print(apply(fragility23[,4:5],1,sum)) # applies sum() row-wise (margin = 1)</cod
 ## [179,]  3.807887                  1.183216</code></pre>
 <pre class="r"><code>class(sapply(fragility23[,4:5],sqrt)) # checks the class of the simplified output</code></pre>
 <pre><code>## [1] &quot;matrix&quot; &quot;array&quot;</code></pre>
-<p>Now our own function:</p>
+<div id="now-our-own-function" class="section level4">
+<h4>Now our own function:</h4>
 <pre class="r"><code># defines a custom function
 theOnesOK = function(DF_country_and_variable) {
   variable_values &lt;- DF_country_and_variable[,2]            # extracts the second column values
