@@ -1,0 +1,148 @@
+---
+title: An R Markdown document converted from "Applying_Fun_R.ipynb"
+output: html_document
+---
+
+# Applying functions in R
+
+Installing to tead Excel files:
+
+```{r}
+# install.packages('rio')
+```
+
+# reading data
+
+```{r}
+# opening a file from a url (file in Excel), name it 'fragility23'
+linkGit="https://github.com/DACSS-Fundamentals/overview/raw/refs/heads/main/FSI-2023-DOWNLOAD.xlsx" # opening a file from a url (file in Excel), name it 'fragility23'
+
+# library(rio) # package needed
+fragility23=rio::import(file = linkGit) # imports the Excel file and stores it as a data frame
+```
+
+```{r}
+str(fragility23) # displays the structure of the data frame
+```
+
+## Apply square root function?
+
+```{r}
+# whole DF?
+# sqrt(fragility23) # would fail because sqrt() cannot be applied to non-numeric columns
+```
+
+```{r}
+# several columns (only numerical)
+
+sqrt(fragility23[,4:5]) # applies square root to columns 4 and 5
+```
+
+```{r}
+# one column
+sqrt(fragility23$Total)  # applies square root to the 'Total' column
+```
+
+```{r}
+# one value
+sqrt(fragility23$Total[1]) # applies square root to the first value of the 'Total' column
+```
+
+## Applying **sum()**:
+
+```{r}
+# sum everything
+sum(fragility23[,4:5]) # sums all values in columns 4 and 5
+```
+
+```{r}
+# sum by column
+print(apply(fragility23[,4:5],2,sum)) # applies sum() column-wise (margin = 2)
+```
+
+```{r}
+#notice
+typeof(apply(fragility23[,4:5],2,sum)) # checks the data type of the result
+```
+
+If you do not see **list**, then it is a vector. ⏫
+
+```{r}
+# sum by row
+print(apply(fragility23[,4:5],1,sum)) # applies sum() row-wise (margin = 1)
+```
+
+### Apply by iterating:
+
+```{r}
+print(lapply(fragility23[,4:5],sum)) # applies sum() to each column and returns a list
+```
+
+Notice output of **lapply**:
+
+```{r}
+typeof(lapply(fragility23[,4:5],sum)) # checks the type (list)
+```
+
+```{r}
+class(lapply(fragility23[,4:5],sum)) # checks the class of the output
+```
+
+Notice output of **sapply**:
+
+```{r}
+print(sapply(fragility23[,4:5],sum)) # applies sum() and simplifies output to a vector
+```
+
+```{r}
+class(sapply(fragility23[,4:5],sum)) # checks the class of the simplified output
+```
+
+Similarly:
+
+```{r}
+print(lapply(fragility23[,4:5],sqrt)) # applies sqrt() to each column, returns a list
+```
+
+```{r}
+class(lapply(fragility23[,4:5],sqrt)) # checks the class of the list output
+```
+
+```{r}
+print(sapply(fragility23[,4:5],sqrt)) # applies sqrt() and simplifies the output
+```
+
+```{r}
+class(sapply(fragility23[,4:5],sqrt)) # checks the class of the simplified output
+```
+
+Now our own function:
+
+```{r}
+# defines a custom function
+theOnesOK = function(DF_country_and_variable) {
+  variable_values <- DF_country_and_variable[,2]            # extracts the second column values
+  avg_value <- mean(variable_values, na.rm = TRUE)          # computes the mean, ignoring NA values
+  is_above <- ifelse(variable_values > avg_value, "Above Average", "Below/At Average")    # compares values to the mean
+  DF_country_and_variable$Status <- is_above                # adds a new column named 'Status'
+  return(DF_country_and_variable)                           # returns the modified data frame
+}
+```
+
+```{r}
+theOnesOK(fragility23[,c('Country','S1: Demographic Pressures')]) # applies the function to selected columns
+```
+
+```{r}
+mystery=function(DF,positionsToUse,CountryColumn='Country'){
+  newDF=DF[,c(CountryColumn),drop = FALSE]                 # creates a data frame with only the country column
+  average='average'                                        # sets the name of the new column
+  newDF[,average]=apply(DF[,positionsToUse],1,mean,na.rm = TRUE)    # computes row-wise means
+  return(newDF[,c(CountryColumn,average)])                 # returns country and average columns
+}
+```
+
+```{r}
+mystery(fragility23,4:6)                                  # applies the mystery function to columns 4 through 6
+```
+
