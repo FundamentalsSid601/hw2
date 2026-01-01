@@ -170,3 +170,8 @@ mystery=function(DF,positionsToUse,CountryColumn='Country'){
 mystery(fragility23,4:6)                                  # applies the mystery function to columns 4 through 6
 ```
 
+### Explanation
+
+The function theOnesOK2 analyzes a single specified numeric variable in a data frame, computes its overall mean across all countries, and then classifies each country as either “Above Average” or “Below/At Average” based on whether its value exceeds that mean, returning only the country name and the classification
+
+The mystery function calculates a row-wise average for each country by taking the mean across multiple selected columns, producing a numeric summary score per country rather than a categorical label, and returns the country along with this computed average.
