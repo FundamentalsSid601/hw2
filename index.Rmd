@@ -134,6 +134,28 @@ theOnesOK(fragility23[,c('Country','S1: Demographic Pressures')]) # applies the 
 ```
 
 ```{r}
+# defines a custom function
+theOnesOK2 = function(DF, DFvariable, CountryColumn='Country') {
+  variable_values <- DF[,DFvariable]                             # extract the selected variable column from the data frame
+  avg_value <- mean(variable_values, na.rm = TRUE)               # compute the mean of the variable (ignoring missing values)
+  is_above <- ifelse(variable_values > avg_value, "Above Average", "Below/At Average")   # classify values as above or below/at the average
+  newname = paste('Status_on', DFvariable)                       # create a new column name based on the variable name
+  DF[,newname] <- is_above                                       # add the classification as a new column in the data frame 
+  return(DF[,c(CountryColumn, newname)])                         # return only the country column and the new status column
+}
+
+#theOnesOK2 is a flexible function that lets the user choose which variable and country column to analyze and returns only the country and a dynamically named status column.
+
+#theOnesOK assumes the variable is always in the second column, adds a fixed Status column, and returns the entire data frame.
+
+```
+
+```{r}
+theOnesOK2(fragility23, "Total", CountryColumn = "Country")
+```
+
+
+```{r}
 mystery=function(DF,positionsToUse,CountryColumn='Country'){
   newDF=DF[,c(CountryColumn),drop = FALSE]                 # creates a data frame with only the country column
   average='average'                                        # sets the name of the new column
